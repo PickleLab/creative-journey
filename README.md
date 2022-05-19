@@ -1,1 +1,3 @@
-# creative-journey
+# Creative Journey
+
+A set of creative web experiments
