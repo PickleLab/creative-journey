@@ -50,25 +50,27 @@ renderer.render(scene, camera);
 // Clock
 const clock = new THREE.Clock();
 
+// gsap.to(cube1.position, { duration: 1, delay: 1, x: 2 })
+// gsap.to(cube1.position, { duration: 1, delay: 0, x: 0 })
 
 
 // Animations
 const tick = () => {
-  gsap.to(cube1.position, { duration: 1, delay: 1, x: 2 })
-
-  // const elapsedTime = clock.getElapsedTime();
-  // console.log(elapsedTime);
   
-  // // Object updates
-  // cube1.rotation.x = elapsedTime * Math.PI; // we do this to balance the framerate
-  // cube2.rotation.x = elapsedTime * Math.PI;
-  // cube2.rotation.y = elapsedTime * Math.PI;
-  // cube3.rotation.y = elapsedTime * Math.PI;
-
-  // cube1.position.x = Math.cos(elapsedTime * 2) * 2;
-  // cube2.position.y = Math.sin(elapsedTime * 2) * 2;
-  // cube3.position.z = Math.tan(elapsedTime * 2) * 2;
+  const elapsedTime = clock.getElapsedTime();
+  console.log(elapsedTime);
   
+  // Object updates
+  cube1.rotation.x = elapsedTime * Math.PI; // we do this to balance the framerate
+  cube2.rotation.x = elapsedTime * Math.PI;
+  cube2.rotation.y = elapsedTime * Math.PI;
+  cube3.rotation.y = elapsedTime * Math.PI;
+
+  cube1.position.x = Math.cos(elapsedTime * 2) * 2;
+  cube2.position.y = Math.sin(elapsedTime * 2) * 2;
+  cube3.position.z = Math.tan(elapsedTime * 2) * 2;
+  
+  // Render
   renderer.render(scene, camera);
   requestAnimationFrame(tick);
 };
