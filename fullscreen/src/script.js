@@ -15,6 +15,39 @@ window.addEventListener("mousemove", (event) => {
   cursor.y = (event.clientY / sizes.height - 0.5) * -1;
 });
 
+window.addEventListener("resize", () => {
+  // Update sizes
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  // Update camera
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  // Update renderer
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+
+window.addEventListener("dblclick", () => {
+  const fullscreenElement =
+    document.fullscreenElement || document.webkitFullscreenElement;
+
+  if (!fullscreenElement) {
+    if (canvas.requestFullscreen) {
+      canvas.requestFullscreen();
+    } else if (canvas.webkitRequestFullscreen) {
+      canvas.webkitRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+});
+
 /**
  * Base
  */
@@ -27,18 +60,6 @@ const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
 };
-
-window.addEventListener("resize", () => {
-  sizes.width = window.innerWidth;
-  sizes.height = window.innerHeight;
-
-  // Update camera
-  camera.aspect = sizes.width / sizes.height;
-  camera.updateProjectionMatrix();
-  
-  // Update renderer
-  renderer.setSize(sizes.width, sizes.height);
-});
 
 // Scene
 const scene = new THREE.Scene();
@@ -57,45 +78,22 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-// const aspectRatio = sizes.width / sizes.height;
-// const camera = new THREE.OrthographicCamera(
-//   -1 * aspectRatio,
-//   1 * aspectRatio,
-//   1,
-//   -1,
-//   0.1,
-//   100
-// );
 
-// camera.position.x = 2;
-// camera.position.y = 2;
 camera.position.z = 3;
-// camera.lookAt(cube.position);
 scene.add(camera);
 
-// Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 
-// Renderer
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
 
-// Animate
 const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
-
-  // Update objects
-  // cube.rotation.y = elapsedTime;
-  //   camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
-  //   camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
-  //   camera.position.y = cursor.y * 4;
-  //   camera.lookAt(cube.position);
-
   // Render
 
   // Update controls
